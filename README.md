@@ -38,3 +38,9 @@ https://help.aliyun.com/document_detail/322691.html
 4. scrollTop + clientHeight = scrollHeight 触底条件
 5. offset 偏移量
 6. scrollTop + clientHeight >= scrollHeight - offset 触发条件
+
+## 单元测试
+- jest
+- 安装包：pnpm i vitest jsdom @testing-library/react -D
+- vitest 文档：https://vitest.dev/api/
+- react-testing-library文档：https://testing-library.com/docs/react-testing-library/api
