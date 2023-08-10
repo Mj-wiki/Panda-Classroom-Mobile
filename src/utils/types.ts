@@ -117,4 +117,20 @@ export interface IWxConfig {
   paySign: string;
 }
 
+/**
+ * 个人消费卡
+ */
+export interface ICardRecord {
+  id: string;
+  startTime: string;
+  endTime: string;
+  buyTime: string;
+  residueTime: number; // 剩余次数
+  status: string;
+  card:ICard;
+  org: IOrganization;
+}
+
 export type TWxConfigQuery = TBaseQuery<IWxConfig>;
+
+export type TCardRecordsQuery = TBaseQuery<ICardRecord[]>;
