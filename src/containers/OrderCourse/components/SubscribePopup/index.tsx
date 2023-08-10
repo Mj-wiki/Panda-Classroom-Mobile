@@ -1,9 +1,9 @@
 import {
-  Button, Divider, Selector, Tabs,
+  Button, Divider, Selector, Tabs, Toast,
 } from 'antd-mobile';
 import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
-import { useSchedulesByCourse } from '@/services/schedule';
+import { useSchedulesByCourse, useSubscribeCourse } from '@/services/schedule';
 import { getWeekZh } from '@/utils';
 import { useUseCards } from '@/services/card';
 import style from './index.module.less';
@@ -11,6 +11,7 @@ import ConsumeCard from '../ConsumeCard';
 
 interface IProps {
   courseId: string;
+  onClose: () => void;
 }
 
 /**
@@ -19,11 +20,13 @@ interface IProps {
 */
 const SubscribePopup = ({
   courseId,
+  onClose,
 }: IProps) => {
   const { data } = useSchedulesByCourse(courseId);
   const { data: cards } = useUseCards(courseId);
   const [selectSchedule, setSelectSchedule] = useState<string[]>([]);
   const [selectCard, setSelectCard] = useState<string[]>([]);
+  const { subscribe, loading } = useSubscribeCourse();
 
   const weeks = useMemo(() => {
     const w = [];
@@ -49,7 +52,27 @@ const SubscribePopup = ({
     label: <ConsumeCard dataSource={item} />,
     value: item.id,
   })), [cards]);
-  console.log('weeks', selectSchedule, weeks, selectCard);
+
+  // 处理预约课程
+  const subscribeHandler = async () => {
+    if (selectSchedule.length === 0 || selectCard.length === 0) {
+      Toast.show({
+        content: '请选择对应的上课时间和消费卡',
+      });
+      return;
+    }
+    const res = await subscribe(selectSchedule[0], selectCard[0]);
+    if (res?.code === 200) {
+      Toast.show({
+        content: res.message,
+      });
+      onClose();
+      return;
+    }
+    Toast.show({
+      content: res?.message,
+    });
+  };
   return (
     <div className={style.container}>
       <Divider>请选择预约时间</Divider>
@@ -73,7 +96,9 @@ const SubscribePopup = ({
       <Divider />
       <Button
         color="primary"
+        loading={loading}
         className={style.button}
+        onClick={subscribeHandler}
       >
         立即预约
       </Button>

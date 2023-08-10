@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 import { ICardRecord } from '@/utils/types';
 import { CARD_TYPE, DAY_FORMAT } from '@/utils/constants';
 import { Space, Tag } from 'antd-mobile';
@@ -14,16 +12,11 @@ interface IProps {
 */
 const ConsumeCard = ({
   dataSource,
-}: IProps) => {
-  const [state, setState] = useState();
-  useEffect(() => {
-    console.log(state, setState);
-  }, []);
-  return (
-    <div className={style.container}>
-      <Space justify="between" block>
-        <span>
-          {dataSource.card.type === CARD_TYPE.TIME[0]
+}: IProps) => (
+  <div className={style.container}>
+    <Space justify="between" block>
+      <span>
+        {dataSource.card.type === CARD_TYPE.TIME[0]
           && (
           <Tag
             color="primary"
@@ -32,7 +25,7 @@ const ConsumeCard = ({
             {CARD_TYPE.TIME[1]}
           </Tag>
           )}
-          {dataSource.card.type === CARD_TYPE.DURATION[0]
+        {dataSource.card.type === CARD_TYPE.DURATION[0]
           && (
           <Tag
             color="warning"
@@ -41,16 +34,16 @@ const ConsumeCard = ({
             {CARD_TYPE.DURATION[1]}
           </Tag>
           )}
-          <span className={style.name}>
-            {dataSource.card.name}
-          </span>
+        <span className={style.name}>
+          {dataSource.card.name}
         </span>
-        <span>
-          有效期至：
-          {dayjs(dataSource.endTime).format(DAY_FORMAT)}
-        </span>
-      </Space>
-      {dataSource.card.type === CARD_TYPE.TIME[0] && (
+      </span>
+      <span>
+        有效期至：
+        {dayjs(dataSource.endTime).format(DAY_FORMAT)}
+      </span>
+    </Space>
+    {dataSource.card.type === CARD_TYPE.TIME[0] && (
       <Space justify="between" block className={style.residueTime}>
         <span>
           剩余
@@ -58,9 +51,8 @@ const ConsumeCard = ({
           次
         </span>
       </Space>
-      )}
-    </div>
-  );
-};
+    )}
+  </div>
+);
 
 export default ConsumeCard;

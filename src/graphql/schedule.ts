@@ -37,3 +37,11 @@ export const GET_SCHEDULES_BY_COURSE = gql`
       }
     }
   }`;
+
+export const SUBSCRIBE_COURSE = gql`
+mutation subscribeCourse($scheduleId: String!, $cardId: String!) {
+  subscribeCourse(scheduleId: $scheduleId, cardId: $cardId) {
+    code
+    message
+  }
+}`;

@@ -1,6 +1,6 @@
-import { GET_CAN_SUBSCRIBE_COURSES, GET_SCHEDULES_BY_COURSE } from '@/graphql/schedule';
-import { TOrgsQuery, TSchedulesQuery } from '@/utils/types';
-import { useQuery } from '@apollo/client';
+import { GET_CAN_SUBSCRIBE_COURSES, GET_SCHEDULES_BY_COURSE, SUBSCRIBE_COURSE } from '@/graphql/schedule';
+import { TBaseQuery, TOrgsQuery, TSchedulesQuery } from '@/utils/types';
+import { useMutation, useQuery } from '@apollo/client';
 
 // 获取我的可以约的课程
 export const useCanSubscribeCourses = () => {
@@ -23,5 +23,28 @@ export const useSchedulesByCourse = (courseId: string) => {
   return {
     loading,
     data: data?.getSchedulesByCourse.data,
+  };
+};
+
+// 立即预约课程
+export const useSubscribeCourse = () => {
+  const [subscribe, { loading }] = useMutation<TBaseQuery>(SUBSCRIBE_COURSE);
+
+  const subscribeHandler = async (
+    scheduleId: string,
+    cardId: string,
+  ) => {
+    const res = await subscribe({
+      variables: {
+        scheduleId,
+        cardId,
+      },
+    });
+    return res.data?.subscribeCourse;
+  };
+
+  return {
+    subscribe: subscribeHandler,
+    loading,
   };
 };

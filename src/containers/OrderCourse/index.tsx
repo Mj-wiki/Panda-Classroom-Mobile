@@ -36,6 +36,11 @@ const OrderCourse = () => {
     setCurCourse(id);
     setShowPopup(true);
   };
+
+  const onCloseHandler = () => {
+    setCurCourse('');
+    setShowPopup(false);
+  };
   return (
     <div className={style.container}>
       <Steps
@@ -64,14 +69,11 @@ const OrderCourse = () => {
       <Popup
         visible={showPopup}
         position="bottom"
-        onMaskClick={() => {
-          setShowPopup(false);
-        }}
-        onClose={() => {
-          setShowPopup(false);
-        }}
+        onMaskClick={onCloseHandler}
+        onClose={onCloseHandler}
       >
-        <SubscribePopup courseId={curCourse} />
+        {curCourse
+         && <SubscribePopup onClose={onCloseHandler} courseId={curCourse} />}
       </Popup>
     </div>
   );
