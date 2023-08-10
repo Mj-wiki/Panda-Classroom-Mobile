@@ -1,21 +1,27 @@
-import { useState, useEffect } from 'react';
 import { useProducts } from '@/services/product';
-import { Grid, PullToRefresh } from 'antd-mobile';
+import { ErrorBlock, Grid, PullToRefresh } from 'antd-mobile';
 import ProductCard from '../ProductCard';
 import style from './index.module.less';
+
+interface IProps {
+  name: string; // 搜索的关键字
+  type: string; // 商品分类
+}
 
 /**
 * 商品列表
 */
-const ProductList = () => {
-  const [state, setState] = useState();
-  const { data } = useProducts();
-  useEffect(() => {
-    console.log(state, setState);
-  }, []);
+const ProductList = ({
+  name,
+  type,
+}: IProps) => {
+  const { data, onRefresh } = useProducts(name, type);
+  if (data && data.length === 0) {
+    return <ErrorBlock status="empty" />;
+  }
   return (
     <div className={style.container}>
-      <PullToRefresh>
+      <PullToRefresh onRefresh={onRefresh}>
         <Grid columns={2} gap={10}>
           {
         data?.map((item) => (

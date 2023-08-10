@@ -1,4 +1,5 @@
 import { SearchBar } from 'antd-mobile';
+import { useState } from 'react';
 import TypeSelect from './components/TypeSelect';
 
 import style from './index.module.less';
@@ -8,12 +9,15 @@ import ProductList from './components/ProductList';
 * 精选课程
 */
 const Home = () => {
+  const [name, setName] = useState('');
+  const [type, setType] = useState('');
+
   const onSearchHandler = (val: string) => {
-    console.log('val', val);
+    setName(val);
   };
 
   const onTypeChangeHandler = (key: string) => {
-    console.log('key', key);
+    setType(key);
   };
 
   return (
@@ -23,7 +27,7 @@ const Home = () => {
         onSearch={onSearchHandler}
       />
       <TypeSelect onChange={onTypeChangeHandler} />
-      <ProductList />
+      <ProductList name={name} type={type} />
     </div>
   );
 };

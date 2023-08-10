@@ -1,5 +1,6 @@
 import { useProductTypes } from '@/services/product';
 import { SpinLoading, Tabs } from 'antd-mobile';
+import { DEFAULT_TYPE } from '@/utils/constants';
 import style from './index.module.less';
 
 interface IProps {
@@ -20,10 +21,9 @@ const TypeSelect = ({
     <Tabs
       className={style.tabs}
       onChange={onChange}
-      defaultActiveKey={
-      data[0].key
-    }
+      defaultActiveKey={DEFAULT_TYPE}
     >
+      <Tabs.Tab title="全部" key={DEFAULT_TYPE} />
       {data.map((item) => (
         <Tabs.Tab title={item.title} key={item.key} />
       ))}
