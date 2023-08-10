@@ -27,7 +27,7 @@ const BaseInfo = ({
     <Grid columns={3} gap={8} className={style.sale}>
       <Grid.Item>
         剩余库存：
-        {data.stock}
+        {data.curStock}
       </Grid.Item>
       <Grid.Item>
         每人限购：

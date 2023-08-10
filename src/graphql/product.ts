@@ -30,6 +30,8 @@ export const GET_PRODUCTS = gql`
         desc
         originalPrice
         stock
+        curStock
+        buyNumber
         status
         distance
         preferentialPrice
@@ -76,6 +78,8 @@ export const GET_PRODUCT = gql`
         status
         originalPrice
         stock
+        curStock
+        buyNumber
         preferentialPrice
         org {
           logo
