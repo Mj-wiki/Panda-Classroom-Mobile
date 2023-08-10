@@ -27,7 +27,7 @@ export const GET_PRODUCTS = gql`
         name
         coverUrl
         bannerUrl
-        descs
+        desc
         originalPrice
         stock
         status
