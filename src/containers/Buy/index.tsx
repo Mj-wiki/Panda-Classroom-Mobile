@@ -5,6 +5,9 @@ import { Grid, Stepper, Toast } from 'antd-mobile';
 import { useState } from 'react';
 import { useUserContext } from '@/hooks/userHooks';
 import { useWxpayConfig } from '@/services/order';
+import { DISABLE_DEV } from '@/utils/constants';
+import { uniqueId } from 'lodash';
+import WxPay from '@/components/WxPay';
 import style from './index.module.less';
 import FailResult from './components/FailResult';
 import SuccessResult from './components/SuccessResult';
@@ -15,17 +18,27 @@ const { WeixinJSBridge } = window as any;
 * 购买商品信息
 */
 const Buy = () => {
-  const { id } = useParams();
-  const { data } = useProductInfo(id || '');
+  const { id = '' } = useParams();
+  const { data } = useProductInfo(id);
   const [count, setCount] = useState<number>(1);
   const [showResult, setShowResult] = useState({
     showSuccess: false,
     showFail: false,
   });
-  const { store } = useUserContext();
+  const { store, setStore } = useUserContext();
   const { getWxConfig } = useWxpayConfig();
+  const [openPay, setOpenPay] = useState<boolean>(false);
 
   const buyHandler = async () => {
+    // 调试状态下，直接吊起模拟微信支付
+    if (DISABLE_DEV) {
+      setStore({
+        openid: uniqueId(),
+      });
+      setOpenPay(true);
+      return;
+    }
+
     if (!store.openid) {
       window.location.href = `/wx/login?userId=${store.id}&url=${window.location.href}`;
       return;
@@ -69,17 +82,18 @@ const Buy = () => {
       Toast.show({
         content: '请在微信中打开该页面',
       });
-      const wxConfig = await getWxConfig(
-        id,
-        count,
-        data.preferentialPrice * count,
-      );
-      console.log('wxConfig', wxConfig);
-      setShowResult({
-        showSuccess: true,
-        showFail: false,
-      });
     }
+  };
+
+  const onWxpayCloseHandler = () => {
+    setOpenPay(false);
+  };
+
+  const onFinishHandler = () => {
+    setShowResult({
+      showSuccess: true,
+      showFail: false,
+    });
   };
 
   if (!data) {
@@ -105,6 +119,14 @@ const Buy = () => {
   }
   return (
     <div className={style.container}>
+      <WxPay
+        visible={openPay}
+        onClose={onWxpayCloseHandler}
+        amount={data.preferentialPrice * count}
+        onFinish={onFinishHandler}
+        productId={id}
+        quantity={count}
+      />
       <div className={style.organization}>
         <div className={style.logo}>
           <img
