@@ -99,6 +99,10 @@ const Login = () => {
           />
         </Form.Item>
       </Form>
+      <div className={style.test}>
+        测试账号：black123
+        密码：black123
+      </div>
       <div>
         <Space>
           没有账号？去

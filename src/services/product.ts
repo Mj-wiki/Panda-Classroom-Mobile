@@ -45,24 +45,22 @@ export const useProducts = (
   const [data, setData] = useState<IProduct[]>([]);
   const [get] = useLazyQuery<TProductsQuery>(GET_PRODUCTS);
 
-  console.log('pn.current', pn.current);
-
   const init = async (pageNum = 1) => {
     const toast = Toast.show({
       icon: 'loading',
       content: '加载中…',
     });
-    // const {
-    //   latitude,
-    //   longitude,
-    // } = await getPosition();
+    const {
+      latitude,
+      longitude,
+    } = await getPosition();
     const res = await get({
       fetchPolicy: 'network-only',
       variables: {
         name,
         type: type === DEFAULT_TYPE ? '' : type,
-        latitude: 120,
-        longitude: 38,
+        latitude,
+        longitude,
         page: {
           pageNum,
           pageSize: DEFAULT_PAGE_SIZE,
