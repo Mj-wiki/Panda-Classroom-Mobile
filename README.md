@@ -59,3 +59,4 @@ https://help.aliyun.com/document_detail/322691.html
 ## 本地安装和使用 docker
 - docker 官网地址：https://www.docker.com/
 - Mac 系统下载 docker 地址：https://docs.docker.com/desktop/install/mac-install/
+- 构建 docker 镜像：`docker build -t mobile:v1 .`
