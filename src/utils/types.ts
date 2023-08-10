@@ -72,3 +72,5 @@ export interface IProduct {
 type TBaseQuery<T> = { [key: string]: { __typename?: 'Query', data: T, page: IPage } };
 export type TProductTypeQuery = TBaseQuery<IProductType[]>;
 export type TProductsQuery = TBaseQuery<IProduct[]>;
+
+export type TOrgQuery = TBaseQuery<IOrganization>;
