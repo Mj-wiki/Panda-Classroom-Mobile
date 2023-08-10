@@ -1,3 +1,5 @@
+import { SCHEDULE_STATUS } from './constants';
+
 export interface IStudent {
   id: string;
   tel: string;
@@ -152,7 +154,19 @@ export interface ISchedule {
   teacher: ITeacher;
 }
 
+export interface IScheduleRecord {
+  id: string;
+  subscribeTime: string;
+  tel: string;
+  status: keyof typeof SCHEDULE_STATUS;
+  course: ICourse;
+  student: IStudent;
+  schedule: ISchedule;
+  org: IOrganization;
+}
+
 export type TSchedulesQuery = TBaseQuery<ISchedule[]>;
 export type TWxConfigQuery = TBaseQuery<IWxConfig>;
 
 export type TCardRecordsQuery = TBaseQuery<ICardRecord[]>;
+export type TScheduleRecordsQuery = TBaseQuery<IScheduleRecord[]>;

@@ -45,3 +45,42 @@ mutation subscribeCourse($scheduleId: String!, $cardId: String!) {
     message
   }
 }`;
+
+export const GET_SCHEDULE_RECORD = gql`
+query getScheduleRecords($page: PageInput!) {
+  getScheduleRecords(page: $page) {
+    code
+    data {
+      id
+      schedule {
+        schoolDay
+        startTime
+        endTime
+        teacher {
+          name
+          id
+        }
+      }
+      status
+      course {
+        name
+        coverUrl
+      }
+      org {
+        name
+        id
+        logo
+      }
+    }
+    message
+  }
+}`;
+
+export const CANCEL_SUBSCRIBE = gql`
+  mutation cancelSubscribeCourse($scheduleRecordId: String!) {
+    cancelSubscribeCourse(scheduleRecordId: $scheduleRecordId) {
+      code
+      message
+    }
+  }
+`;

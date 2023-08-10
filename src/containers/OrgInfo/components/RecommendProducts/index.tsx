@@ -35,7 +35,6 @@ const RecommendProducts = ({
     <Card title="推荐课程" className={style.container}>
       {
         data.map((item) => (
-
           <div key={item.id} onClick={() => goToProduct(item.id)}>
             <Grid
               columns={12}
