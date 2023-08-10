@@ -2,11 +2,12 @@ import { useMutation } from '@apollo/client';
 import {
   Button, Form, Input, ImageUploader,
 } from 'antd-mobile';
+import classNames from 'classnames';
 import { useEffect } from 'react';
 import { UPDATE } from './graphql/demo';
 import { useUploadOSS } from './hooks/useUploadOSS';
 
-import './App.css';
+import styles from './App.module.less';
 
 const App = () => {
   const uploadHandler = useUploadOSS();
@@ -34,8 +35,9 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <Form
+        className={classNames(styles.form, styles.formPadding)}
         layout="horizontal"
         onFinish={onClickHandler}
         footer={(

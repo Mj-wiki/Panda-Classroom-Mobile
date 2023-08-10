@@ -5,6 +5,7 @@ import zhCN from 'antd-mobile/es/locales/zh-CN';
 import { client } from './utils/apollo';
 
 import App from './App';
+import './theme.css';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
