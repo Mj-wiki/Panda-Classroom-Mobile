@@ -18,3 +18,14 @@ https://help.aliyun.com/document_detail/322691.html
 3 添加通用方法
 4 修复一些基本问题
 5 reset.css https://www.jsdelivr.com/package/npm/reset-css
+
+## 实现下拉刷新功能
+1 ScrollTop
+2 鼠标事件：toouchstart、touchmove、 touchend
+3 y 的偏移量
+4 最大偏移量：maxY
+
+## 下拉刷新的扩展思考
+- 动画组件库：https://www.react-spring.dev/docs/getting-started
+- 手势操作组件库：https://use-gesture.netlify.app/docs/
+- 体验更好的 Scroll 库：https://better-scroll.github.io/docs/zh-CN/guide/base-scroll.html
