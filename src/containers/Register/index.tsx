@@ -2,7 +2,7 @@ import {
   Button, Form, Input,
 } from 'antd-mobile';
 import { useMutation } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as md5 from 'md5';
 import { STUDENT_REGISTER } from '../../graphql/user';
 import { showFail, showSuccess } from '../../utils';
@@ -107,6 +107,10 @@ const Register = () => {
           />
         </Form.Item>
       </Form>
+      <div>
+        有账号？去
+        <Link to="/login">登录</Link>
+      </div>
     </div>
   );
 };

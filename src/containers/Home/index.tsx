@@ -1,16 +1,18 @@
 import { Button } from 'antd-mobile';
-import { useNavigate } from 'react-router-dom';
+import { useGoTo } from '@/hooks';
+import { ROUTE_KEY } from '@/routes/menus';
+
 import style from './index.module.less';
 
 /**
 *
 */
 const Home = () => {
-  const nav = useNavigate();
+  const { go } = useGoTo();
   return (
     <div className={style.container}>
       <Button onClick={() => {
-        nav('/my');
+        go(ROUTE_KEY.MY);
       }}
       >
         去编辑个人信息

@@ -6,12 +6,11 @@ import zhCN from 'antd-mobile/es/locales/zh-CN';
 import Login from './containers/Login';
 import Register from './containers/Register';
 import { client } from './utils/apollo';
-import Home from './containers/Home';
-import My from './containers/My';
-
-import './theme.css';
-import './index.css';
 import StudentInfo from './components/StudentInfo';
+import { routes } from './routes/menus';
+import App from './App';
+import { ROUTE_COMPONENT } from './routes';
+import './theme.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ConfigProvider locale={zhCN}>
@@ -19,10 +18,20 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <BrowserRouter>
         <StudentInfo>
           <Routes>
-            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/my" element={<My />} />
+            <Route path="/" element={<App />}>
+              {routes.map((item) => {
+                const Component = ROUTE_COMPONENT[item.key];
+                return (
+                  <Route
+                    path={item.path}
+                    key={item.key}
+                    element={<Component />}
+                  />
+                );
+              })}
+            </Route>
           </Routes>
         </StudentInfo>
       </BrowserRouter>

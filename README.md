@@ -11,3 +11,10 @@ pnpm i @apollo/client graphql -S
 
 ## OSS 图片上传文档
 https://help.aliyun.com/document_detail/322691.html
+
+## 搭建基本框架
+1 添加 Route
+2 添加 404 
+3 添加通用方法
+4 修复一些基本问题
+5 reset.css https://www.jsdelivr.com/package/npm/reset-css
