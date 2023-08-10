@@ -1,14 +1,14 @@
-import { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
+import {
+  Button, Form, Input, Calendar,
+} from 'antd-mobile';
+import { useEffect } from 'react';
 
 import { FIND, UPDATE } from './graphql/demo';
 
 import './App.css';
 
 const App = () => {
-  const [name, setName] = useState('');
-  const [desc, setDesc] = useState('');
-
   const { loading, data } = useQuery(FIND, {
     variables: {
       id: 'cb71e40d-9f15-40ef-a137-1acaa38831f4',
@@ -17,22 +17,20 @@ const App = () => {
 
   const [update] = useMutation(UPDATE);
 
-  const onChangeNameHandler = (v: React.ChangeEvent<HTMLInputElement>) => {
-    setName(v.target.value);
-  };
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      'data-prefers-color-scheme',
+      'dark',
+    );
+  }, []);
 
-  const onChangeDescHandler = (v: React.ChangeEvent<HTMLInputElement>) => {
-    setDesc(v.target.value);
-  };
-
-  const onClickHandler = () => {
+  const onClickHandler = (v: any) => {
     update(
       {
         variables: {
           id: 'cb71e40d-9f15-40ef-a137-1acaa38831f4',
           params: {
-            name,
-            desc,
+            ...v,
           },
         },
       },
@@ -41,6 +39,12 @@ const App = () => {
 
   return (
     <div>
+      <Calendar
+        selectionMode="single"
+        onChange={(val) => {
+          console.log(val);
+        }}
+      />
       <p>
         data:
         {JSON.stringify(data)}
@@ -49,17 +53,28 @@ const App = () => {
         loading:
         {`${loading}`}
       </p>
-      <p>
-        name:
-        <input onChange={onChangeNameHandler} />
-      </p>
-      <p>
-        desc:
-        <input onChange={onChangeDescHandler} />
-      </p>
-      <p>
-        <button type="button" onClick={onClickHandler}>更新</button>
-      </p>
+      <Form
+        layout="horizontal"
+        onFinish={onClickHandler}
+        footer={(
+          <Button block type="submit" color="primary" size="large">
+            提交
+          </Button>
+      )}
+      >
+        <Form.Item
+          name="name"
+          label="姓名"
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="desc"
+          label="描述"
+        >
+          <Input />
+        </Form.Item>
+      </Form>
     </div>
   );
 };
