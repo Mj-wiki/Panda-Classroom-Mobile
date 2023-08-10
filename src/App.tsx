@@ -1,19 +1,15 @@
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
-  Button, Form, Input, Calendar,
+  Button, Form, Input, ImageUploader,
 } from 'antd-mobile';
 import { useEffect } from 'react';
-
-import { FIND, UPDATE } from './graphql/demo';
+import { UPDATE } from './graphql/demo';
+import { useUploadOSS } from './hooks/useUploadOSS';
 
 import './App.css';
 
 const App = () => {
-  const { loading, data } = useQuery(FIND, {
-    variables: {
-      id: 'cb71e40d-9f15-40ef-a137-1acaa38831f4',
-    },
-  });
+  const uploadHandler = useUploadOSS();
 
   const [update] = useMutation(UPDATE);
 
@@ -39,20 +35,6 @@ const App = () => {
 
   return (
     <div>
-      <Calendar
-        selectionMode="single"
-        onChange={(val) => {
-          console.log(val);
-        }}
-      />
-      <p>
-        data:
-        {JSON.stringify(data)}
-      </p>
-      <p>
-        loading:
-        {`${loading}`}
-      </p>
       <Form
         layout="horizontal"
         onFinish={onClickHandler}
@@ -73,6 +55,12 @@ const App = () => {
           label="描述"
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          name="actor"
+          label="头像"
+        >
+          <ImageUploader upload={uploadHandler} />
         </Form.Item>
       </Form>
     </div>

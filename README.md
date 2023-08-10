@@ -8,3 +8,6 @@ pnpm i vite-plugin-eslint -D
 
 ## 实现 graphql service 层
 pnpm i @apollo/client graphql -S
+
+## OSS 图片上传文档
+https://help.aliyun.com/document_detail/322691.html
