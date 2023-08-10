@@ -39,13 +39,6 @@ https://help.aliyun.com/document_detail/322691.html
 5. offset 偏移量
 6. scrollTop + clientHeight >= scrollHeight - offset 触发条件
 
-## 部署
-pnpm run build && docker build -t registry.cn-hangzhou.aliyuncs.com/blackstone/water-drop-mobile:3.0 . && docker push registry.cn-hangzhou.aliyuncs.com/blackstone/water-drop-mobile:3.0
-docker pull registry.cn-hangzhou.aliyuncs.com/blackstone/water-drop-mobile:3.0 && docker stop mobile && docker remove mobile && docker images
-docker run -d -p 3000:80 --name mobile --platform linux/arm64 -t 56931d6b45ba
-
-docker log
-
 ## 单元测试
 - jest
 - 安装包：pnpm i vitest jsdom @testing-library/react -D
