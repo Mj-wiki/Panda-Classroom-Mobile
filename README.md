@@ -5,3 +5,6 @@ pnpm i eslint eslint-config-airbnb eslint-config-airbnb-typescript eslint-plugin
 
 ## vite 支持 eslint
 pnpm i vite-plugin-eslint -D
+
+## 实现 graphql service 层
+pnpm i @apollo/client graphql -S
