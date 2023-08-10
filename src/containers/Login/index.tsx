@@ -4,6 +4,7 @@ import { Button, Form, Input } from 'antd-mobile';
 import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
+import { AUTH_TOKEN } from '@/utils/constants';
 import { STUDENT_LOGIN } from '../../graphql/user';
 import { showFail, showSuccess } from '../../utils';
 
@@ -15,7 +16,7 @@ interface IValue {
 }
 
 /**
-*
+* 登录页面
 */
 const Login = () => {
   const [visible, setVisible] = useState(false);
@@ -32,6 +33,7 @@ const Login = () => {
 
     if (res.data.studentLogin.code === 200) {
       showSuccess(res.data.studentLogin.message);
+      localStorage.setItem(AUTH_TOKEN, res.data.studentLogin.data);
       nav('/');
       return;
     }
