@@ -19,7 +19,7 @@ export const useProductTypes = () => {
 };
 
 // 获取当前定位
-const getPosition = () => new Promise<{ latitude: number; longitude: number }>((r) => {
+export const getPosition = () => new Promise<{ latitude: number; longitude: number }>((r) => {
   navigator.geolocation.getCurrentPosition((pos) => {
     const { latitude, longitude } = pos.coords;
     r({ latitude, longitude });
@@ -45,22 +45,24 @@ export const useProducts = (
   const [data, setData] = useState<IProduct[]>([]);
   const [get] = useLazyQuery<TProductsQuery>(GET_PRODUCTS);
 
+  console.log('pn.current', pn.current);
+
   const init = async (pageNum = 1) => {
     const toast = Toast.show({
       icon: 'loading',
       content: '加载中…',
     });
-    const {
-      latitude,
-      longitude,
-    } = await getPosition();
+    // const {
+    //   latitude,
+    //   longitude,
+    // } = await getPosition();
     const res = await get({
       fetchPolicy: 'network-only',
       variables: {
         name,
         type: type === DEFAULT_TYPE ? '' : type,
-        latitude,
-        longitude,
+        latitude: 120,
+        longitude: 38,
         page: {
           pageNum,
           pageSize: DEFAULT_PAGE_SIZE,
@@ -74,7 +76,16 @@ export const useProducts = (
   };
 
   const onRefreshHandler = async () => {
+    // 重新初始化设置
+    pn.current = 1;
     const res = await init();
+    // 这里要提前对于更多值(hasMore)加一个判断，
+    // 防止切换 type 的时候，hasMore 没有变成默认值
+    if (res.length < DEFAULT_PAGE_SIZE) {
+      setHasMore(false);
+    } else {
+      setHasMore(true);
+    }
     setData(res);
   };
 
