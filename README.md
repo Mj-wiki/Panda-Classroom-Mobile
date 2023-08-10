@@ -39,8 +39,26 @@ https://help.aliyun.com/document_detail/322691.html
 5. offset 偏移量
 6. scrollTop + clientHeight >= scrollHeight - offset 触发条件
 
+## 部署
+pnpm run build && docker build -t registry.cn-hangzhou.aliyuncs.com/blackstone/water-drop-mobile:3.0 . && docker push registry.cn-hangzhou.aliyuncs.com/blackstone/water-drop-mobile:3.0
+docker pull registry.cn-hangzhou.aliyuncs.com/blackstone/water-drop-mobile:3.0 && docker stop mobile && docker remove mobile && docker images
+docker run -d -p 3000:80 --name mobile --platform linux/arm64 -t 56931d6b45ba
+
+docker log
+
 ## 单元测试
 - jest
 - 安装包：pnpm i vitest jsdom @testing-library/react -D
 - vitest 文档：https://vitest.dev/api/
 - react-testing-library文档：https://testing-library.com/docs/react-testing-library/api
+
+## 如何安装 nginx
+- windows 部署 nginx：https://juejin.cn/post/7024762773980577805
+- brew 的清华镜像：https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/
+- 使用 brew 安装：`brew install nginx`
+- 启动 nginx：`nginx`
+- 关闭 nginx：`nginx -s stop`
+- 重启 nginx：`nginx -s reload`
+- 访问地址：`http://localhost:8080`
+- 查找 nginx 配置文件位置：`nginx -t`
+- 查找默认的静态文件位置：`nginx -V 2>&1 | grep --color -o '\-\-prefix=[^ ]*' | cut -c 10- | xargs -I {} sh -c 'ls -al {}"/html"'`
