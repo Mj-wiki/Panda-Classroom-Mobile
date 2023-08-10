@@ -10,7 +10,7 @@ interface IProps {
   visible: boolean;
   productId: string;
   quantity: number;
-  onFinish: () => void;
+  onFinish: (result: boolean) => void;
 }
 /**
 * 微信支付窗
@@ -24,17 +24,24 @@ const WxPay = ({
   onFinish,
 }: IProps) => {
   const { get } = useMockOrder();
-  const onChangeHandler = (value: string) => {
+  const onChangeHandler = async (value: string) => {
     if (value.length > 5) {
-      Toast.show({
-        content: '购买成功',
-      });
-      get(
+      const res = await get(
         productId,
         quantity,
         amount,
       );
-      onFinish();
+      if (res.code === 10031) {
+        Toast.show({
+          content: res.message,
+        });
+        onFinish(false);
+        return;
+      }
+      Toast.show({
+        content: res.message,
+      });
+      onFinish(true);
     }
   };
 

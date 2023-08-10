@@ -89,10 +89,19 @@ const Buy = () => {
     setOpenPay(false);
   };
 
-  const onFinishHandler = () => {
+  const onFinishHandler = (result: boolean) => {
+    // 支付成功
+    if (result) {
+      setShowResult({
+        showSuccess: true,
+        showFail: false,
+      });
+      return;
+    }
+    // 支付失败
     setShowResult({
-      showSuccess: true,
-      showFail: false,
+      showSuccess: false,
+      showFail: true,
     });
   };
 

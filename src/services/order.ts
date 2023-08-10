@@ -45,8 +45,7 @@ export const useMockOrder = () => {
         quantity,
       },
     });
-
-    return res.data?.mockOrderGenerator.data;
+    return res.data?.mockOrderGenerator;
   };
 
   return {
