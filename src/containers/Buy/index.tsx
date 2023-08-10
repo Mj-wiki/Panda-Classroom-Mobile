@@ -57,6 +57,8 @@ const Buy = () => {
         count,
         data.preferentialPrice * count,
       );
+      // 有限购
+      if (!wxConfig) return;
       WeixinJSBridge.invoke(
         'getBrandWCPayRequest',
         {

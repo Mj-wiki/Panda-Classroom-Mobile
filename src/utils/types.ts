@@ -99,7 +99,7 @@ export interface IProduct {
   org: IOrganization;
   cards?: ICard[];
 }
-type TBaseQuery<T> = { [key: string]: { __typename?: 'Query', data: T, page: IPage } };
+type TBaseQuery<T> = { [key: string]: { __typename?: 'Query', data: T, page: IPage, code: number, message: string } };
 export type TProductTypeQuery = TBaseQuery<IProductType[]>;
 export type TProductsQuery = TBaseQuery<IProduct[]>;
 export type TProductQuery = TBaseQuery<IProduct>;

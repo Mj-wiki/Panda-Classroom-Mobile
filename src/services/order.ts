@@ -1,6 +1,7 @@
 import { GET_WXPAY_CONFIG, MOCK_ORDER } from '@/graphql/order';
 import { TWxConfigQuery } from '@/utils/types';
 import { useMutation } from '@apollo/client';
+import { Toast } from 'antd-mobile';
 
 export const useWxpayConfig = () => {
   const [get, { loading }] = useMutation<TWxConfigQuery>(GET_WXPAY_CONFIG);
@@ -18,6 +19,13 @@ export const useWxpayConfig = () => {
       },
     });
 
+    // 被限购了
+    if (res.data?.getWxpayConfig.code === 10031) {
+      Toast.show({
+        content: res.data?.getWxpayConfig.message,
+      });
+      return null;
+    }
     return res.data?.getWxpayConfig.data;
   };
 
