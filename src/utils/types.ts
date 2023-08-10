@@ -131,7 +131,7 @@ export interface ICardRecord {
   buyTime: string;
   residueTime: number; // 剩余次数
   status: string;
-  card:ICard;
+  card: ICard;
   org: IOrganization;
 }
 
@@ -152,6 +152,7 @@ export interface ISchedule {
   teacher: ITeacher;
 }
 
+export type TSchedulesQuery = TBaseQuery<ISchedule[]>;
 export type TWxConfigQuery = TBaseQuery<IWxConfig>;
 
 export type TCardRecordsQuery = TBaseQuery<ICardRecord[]>;

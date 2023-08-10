@@ -1,9 +1,11 @@
 import {
-  DotLoading, Result, Space, Steps,
+  DotLoading, Popup, Result, Space, Steps,
 } from 'antd-mobile';
 import { useCanSubscribeCourses } from '@/services/schedule';
+import { useState } from 'react';
 import CourseList from './components/CourseList';
 import style from './index.module.less';
+import SubscribePopup from './components/SubscribePopup';
 
 const { Step } = Steps;
 
@@ -11,6 +13,8 @@ const { Step } = Steps;
 * 预约课程
 */
 const OrderCourse = () => {
+  const [curCourse, setCurCourse] = useState<string>('');
+  const [showPopup, setShowPopup] = useState<boolean>(false);
   const { data, loading } = useCanSubscribeCourses();
   if (loading) {
     return (
@@ -27,6 +31,11 @@ const OrderCourse = () => {
       />
     );
   }
+
+  const onSubscribeHandler = (id: string) => {
+    setCurCourse(id);
+    setShowPopup(true);
+  };
   return (
     <div className={style.container}>
       <Steps
@@ -38,6 +47,7 @@ const OrderCourse = () => {
             key={item.id}
             description={item.courses ? (
               <CourseList
+                onSubscribe={onSubscribeHandler}
                 dataSource={item.courses}
               />
             ) : null}
@@ -51,6 +61,18 @@ const OrderCourse = () => {
           />
         ))}
       </Steps>
+      <Popup
+        visible={showPopup}
+        position="bottom"
+        onMaskClick={() => {
+          setShowPopup(false);
+        }}
+        onClose={() => {
+          setShowPopup(false);
+        }}
+      >
+        <SubscribePopup courseId={curCourse} />
+      </Popup>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import style from './index.module.less';
 
 interface IProps {
   dataSource: ICourse[];
+  onSubscribe: (id: string) => void;
 }
 
 /**
@@ -11,17 +12,14 @@ interface IProps {
 */
 const CourseList = ({
   dataSource,
-}: IProps) => {
-  const subscribeHandler = (id: string) => {
-    console.log(id);
-  };
-  return (
-    <div className={style.container}>
-      <List>
-        {dataSource.map((item) => (
-          <List.Item
-            key={item.id}
-            prefix={
+  onSubscribe,
+}: IProps) => (
+  <div className={style.container}>
+    <List>
+      {dataSource.map((item) => (
+        <List.Item
+          key={item.id}
+          prefix={
             (
               <Image
                 src={item.coverUrl}
@@ -30,27 +28,26 @@ const CourseList = ({
               />
             )
           }
-            extra={
+          extra={
             (
               <Button
                 fill="none"
                 color="primary"
-                onClick={() => subscribeHandler(item.id)}
+                onClick={() => onSubscribe(item.id)}
               >
                 预约
               </Button>
             )
           }
-            description={
+          description={
             item.teachers?.map((it: ITeacher) => it.name).join('，')
             }
-          >
-            {item.name}
-          </List.Item>
-        ))}
-      </List>
-    </div>
-  );
-};
+        >
+          {item.name}
+        </List.Item>
+      ))}
+    </List>
+  </div>
+);
 
 export default CourseList;
