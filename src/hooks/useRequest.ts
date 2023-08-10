@@ -14,7 +14,7 @@ interface IOptions {
  */
 const useRequest = (
   service: (params: Record<string, string>) => Promise<unknown>,
-  options: IOptions
+  options: IOptions,
 ) => {
   const [data, setData] = useState<unknown>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,14 +26,18 @@ const useRequest = (
         .then((res) => {
           setData(res);
           setLoading(false);
-          options.onSuccess && options.onSuccess(res);
+          if (options.onSuccess) {
+            options.onSuccess(res);
+          }
         })
         .catch((error) => {
           setLoading(false);
-          options.onError && options.onError(error);
+          if (options.onError) {
+            options.onError(error);
+          }
         });
     },
-    [service]
+    [service],
   );
 
   useMount(() => {
