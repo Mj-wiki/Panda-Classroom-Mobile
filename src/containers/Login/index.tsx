@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import * as md5 from 'md5';
-import { Button, Form, Input } from 'antd-mobile';
+import {
+  Button, Form, Input, Space,
+} from 'antd-mobile';
 import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
@@ -95,8 +97,10 @@ const Login = () => {
         </Form.Item>
       </Form>
       <div>
-        没有账号？去
-        <Link to="/register">注册</Link>
+        <Space>
+          没有账号？去
+          <Link to="/register">注册</Link>
+        </Space>
       </div>
     </div>
   );

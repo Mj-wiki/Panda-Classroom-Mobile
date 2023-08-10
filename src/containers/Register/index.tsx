@@ -1,5 +1,5 @@
 import {
-  Button, Form, Input,
+  Button, Form, Input, Space,
 } from 'antd-mobile';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
@@ -108,8 +108,10 @@ const Register = () => {
         </Form.Item>
       </Form>
       <div>
-        有账号？去
-        <Link to="/login">登录</Link>
+        <Space>
+          有账号？去
+          <Link to="/login">登录</Link>
+        </Space>
       </div>
     </div>
   );
