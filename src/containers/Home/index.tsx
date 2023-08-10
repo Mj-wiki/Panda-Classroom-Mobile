@@ -1,22 +1,27 @@
-import { Button } from 'antd-mobile';
-import { useGoTo } from '@/hooks';
-import { ROUTE_KEY } from '@/routes/menus';
+import { SearchBar } from 'antd-mobile';
 
 import style from './index.module.less';
+import TypeSelect from './components/TypeSelect';
 
 /**
-*
+* 精选课程
 */
 const Home = () => {
-  const { go } = useGoTo();
+  const onSearchHandler = () => {
+
+  };
+
+  const onTypeChangeHandler = (key: string) => {
+    console.log('key', key);
+  };
+
   return (
     <div className={style.container}>
-      <Button onClick={() => {
-        go(ROUTE_KEY.MY);
-      }}
-      >
-        去编辑个人信息
-      </Button>
+      <SearchBar
+        placeholder="搜索课程试试"
+        onSearch={onSearchHandler}
+      />
+      <TypeSelect onChange={onTypeChangeHandler} />
     </div>
   );
 };
