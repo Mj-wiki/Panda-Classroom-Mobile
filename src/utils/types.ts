@@ -44,6 +44,8 @@ export interface ICourse {
   reserveInfo?: string;
   refundInfo?: string;
   otherInfo?: string;
+  coverUrl?: string; // 封面图
+  teachers?: ITeacher[]; // 讲师，多个
 }
 
 /**
@@ -62,6 +64,7 @@ export interface IOrganization {
   tel?: string;
   longitude?: string;
   latitude?: string;
+  courses?: ICourse[];
 }
 
 /**
@@ -105,6 +108,7 @@ export type TProductsQuery = TBaseQuery<IProduct[]>;
 export type TProductQuery = TBaseQuery<IProduct>;
 
 export type TOrgQuery = TBaseQuery<IOrganization>;
+export type TOrgsQuery = TBaseQuery<IOrganization[]>;
 
 export type TCourse = ICourse & { cardName: string };
 
@@ -129,6 +133,23 @@ export interface ICardRecord {
   status: string;
   card:ICard;
   org: IOrganization;
+}
+
+export interface ITeacher {
+  id: string;
+  name: string;
+  photoUrl: string;
+}
+
+// 课程表
+export interface ISchedule {
+  id: string;
+  startTime: string;
+  endTime: string;
+  buyTime: string;
+  schoolDay: string; // 上课日期
+  course: ICourse;
+  teacher: ITeacher;
 }
 
 export type TWxConfigQuery = TBaseQuery<IWxConfig>;
