@@ -38,7 +38,7 @@ export interface IOrganization {
   orgRoomImg?: IImage[];
   orgOtherImg?: IImage[];
   name: string;
-  logo: string;
+  logo?: string;
   tags?: string;
   description?: string;
   address?: string;

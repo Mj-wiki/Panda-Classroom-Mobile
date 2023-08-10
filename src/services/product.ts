@@ -23,7 +23,7 @@ export const useProducts = (
   pageSize = DEFAULT_PAGE_SIZE,
   type = '',
 ) => {
-  const [get] = useLazyQuery<TProductsQuery>(GET_PRODUCTS);
+  const [get, { data }] = useLazyQuery<TProductsQuery>(GET_PRODUCTS);
 
   useEffect(() => {
     get({
@@ -36,4 +36,8 @@ export const useProducts = (
       },
     });
   }, []);
+
+  return {
+    data: data?.getProductsForH5.data,
+  };
 };
