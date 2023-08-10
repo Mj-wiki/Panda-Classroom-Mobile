@@ -15,6 +15,15 @@ const Buy = () => {
   const [count, setCount] = useState<number>(1);
   const { store } = useUserContext();
 
+  const buyHandler = () => {
+    if (!store.openid) {
+      window.location.href = `/wx/login?userId=${store.id}&url=${window.location.href}`;
+      return;
+    }
+    // 微信支付流程
+    console.log();
+  };
+
   if (!data) {
     return null;
   }
@@ -82,9 +91,9 @@ const Buy = () => {
         <Grid.Item
           span={1}
           className={style.buyButton}
-          onClick={() => {}}
+          onClick={buyHandler}
         >
-          提交订单
+          {store.openid ? '提交订单' : '去微信授权'}
         </Grid.Item>
       </Grid>
     </div>
