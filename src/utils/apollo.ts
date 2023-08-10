@@ -4,8 +4,13 @@ import { onError } from '@apollo/client/link/error'; // 引入onError
 import { Toast } from 'antd-mobile';
 import { AUTH_TOKEN } from './constants';
 
+let uri = `http://${window.location.hostname}:3000/graphql`;
+if (process.env.NODE_ENV === 'production') {
+  uri = 'https://water-drop.yondu.vip/graphql';
+}
+
 const httpLink = createHttpLink({
-  uri: `http://${window.location.hostname}:3000/graphql`,
+  uri,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -45,6 +50,11 @@ const errorLink = onError(({
 
 export const client = new ApolloClient({
   link: errorLink.concat(authLink.concat(httpLink)),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+    },
+  },
   cache: new InMemoryCache({
     addTypename: false,
   }),

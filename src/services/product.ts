@@ -25,6 +25,9 @@ const getPosition = () => new Promise<{ latitude: number; longitude: number }>((
     r({ latitude, longitude });
   }, () => {
     r({ latitude: 0, longitude: 0 });
+  }, {
+    timeout: 3000,
+    maximumAge: 1000 * 60 * 30,
   });
 });
 /**

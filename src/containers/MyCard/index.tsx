@@ -1,7 +1,7 @@
 import { useCards } from '@/services/card';
 import { BankcardOutline } from 'antd-mobile-icons';
 import { Space, Tag } from 'antd-mobile';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { CARD_STATUS, CARD_TYPE, DAY_FORMAT } from '@/utils/constants';
 import classNames from 'classnames';
 import style from './index.module.less';
