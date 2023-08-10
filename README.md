@@ -55,3 +55,7 @@ https://help.aliyun.com/document_detail/322691.html
 - 访问地址：`http://localhost:8080`
 - 查找 nginx 配置文件位置：`nginx -t`
 - 查找默认的静态文件位置：`nginx -V 2>&1 | grep --color -o '\-\-prefix=[^ ]*' | cut -c 10- | xargs -I {} sh -c 'ls -al {}"/html"'`
+
+## 本地安装和使用 docker
+- docker 官网地址：https://www.docker.com/
+- Mac 系统下载 docker 地址：https://docs.docker.com/desktop/install/mac-install/
