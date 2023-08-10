@@ -7,6 +7,7 @@ import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 import { AUTH_TOKEN } from '@/utils/constants';
+import { useUserContext } from '@/hooks/userHooks';
 import { STUDENT_LOGIN } from '../../graphql/user';
 import { showFail, showSuccess } from '../../utils';
 
@@ -22,6 +23,7 @@ interface IValue {
 */
 const Login = () => {
   const [visible, setVisible] = useState(false);
+  const { store } = useUserContext();
   const [login, { loading }] = useMutation(STUDENT_LOGIN);
   const nav = useNavigate();
 
@@ -35,6 +37,7 @@ const Login = () => {
 
     if (res.data.studentLogin.code === 200) {
       showSuccess(res.data.studentLogin.message);
+      store.refetchHandler();
       localStorage.setItem(AUTH_TOKEN, res.data.studentLogin.data);
       nav('/');
       return;
