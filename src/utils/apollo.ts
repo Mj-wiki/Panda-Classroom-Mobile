@@ -1,9 +1,16 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { onError } from '@apollo/client/link/error'; // 引入onError
+import { Toast } from 'antd-mobile';
 import { AUTH_TOKEN } from './constants';
 
+let uri = `http://${window.location.hostname}:3000/graphql`;
+if (process.env.NODE_ENV === 'production') {
+  uri = 'https://water-drop.yondu.vip/graphql';
+}
+
 const httpLink = createHttpLink({
-  uri: `http://${window.location.hostname}:3000/graphql`,
+  uri,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -16,8 +23,38 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const errorLink = onError(({
+  graphQLErrors,
+  networkError,
+}) => {
+  if (graphQLErrors) {
+    Toast.show({
+      content: '请求参数或者返回的数据格式不对',
+    });
+    graphQLErrors.forEach((item) => {
+      if (item.message === 'Unauthorized') {
+        Toast.clear();
+        Toast.show({
+          content: '登录失效，请登录',
+        });
+      }
+    });
+  }
+  if (networkError) {
+    Toast.clear();
+    Toast.show({
+      content: networkError.message,
+    });
+  }
+});
+
 export const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: errorLink.concat(authLink.concat(httpLink)),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+    },
+  },
   cache: new InMemoryCache({
     addTypename: false,
   }),

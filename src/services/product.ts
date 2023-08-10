@@ -1,6 +1,10 @@
-import { GET_PRODUCTS, GET_PRODUCT_TYPES } from '@/graphql/product';
+import {
+  GET_PRODUCT, GET_PRODUCTS, GET_PRODUCTS_BY_ORG_ID, GET_PRODUCT_TYPES,
+} from '@/graphql/product';
 import { DEFAULT_PAGE_SIZE, DEFAULT_TYPE } from '@/utils/constants';
-import { IProduct, TProductTypeQuery, TProductsQuery } from '@/utils/types';
+import {
+  IProduct, TProductQuery, TProductTypeQuery, TProductsQuery,
+} from '@/utils/types';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { Toast } from 'antd-mobile';
 import { useEffect, useRef, useState } from 'react';
@@ -13,6 +17,19 @@ export const useProductTypes = () => {
     loading,
   };
 };
+
+// 获取当前定位
+const getPosition = () => new Promise<{ latitude: number; longitude: number }>((r) => {
+  navigator.geolocation.getCurrentPosition((pos) => {
+    const { latitude, longitude } = pos.coords;
+    r({ latitude, longitude });
+  }, () => {
+    r({ latitude: 0, longitude: 0 });
+  }, {
+    timeout: 3000,
+    maximumAge: 1000 * 60 * 30,
+  });
+});
 /**
  * 获取商品列表
  * @param pageNum
@@ -33,18 +50,26 @@ export const useProducts = (
       icon: 'loading',
       content: '加载中…',
     });
+    const {
+      latitude,
+      longitude,
+    } = await getPosition();
     const res = await get({
       fetchPolicy: 'network-only',
       variables: {
         name,
         type: type === DEFAULT_TYPE ? '' : type,
+        latitude,
+        longitude,
         page: {
           pageNum,
           pageSize: DEFAULT_PAGE_SIZE,
         },
       },
+      onCompleted() {
+        toast.close();
+      },
     });
-    toast.close();
     return res.data?.getProductsForH5.data || [];
   };
 
@@ -74,4 +99,32 @@ export const useProducts = (
     hasMore,
     data,
   };
+};
+
+export const useProductsByOrgId = (orgId: string) => {
+  const { data } = useQuery<TProductsQuery>(
+    GET_PRODUCTS_BY_ORG_ID,
+    {
+      variables: {
+        orgId,
+      },
+    },
+  );
+
+  return data?.getProductsByOrgIdForH5.data;
+};
+
+/**
+ * 获取单个商品
+ * @param id
+ * @returns
+ */
+export const useProductInfo = (id?: string) => {
+  const { data, loading } = useQuery<TProductQuery>(GET_PRODUCT, {
+    variables: {
+      id,
+    },
+  });
+
+  return { data: data?.getProductInfo.data, loading };
 };

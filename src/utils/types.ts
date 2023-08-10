@@ -3,6 +3,7 @@ export interface IStudent {
   tel: string;
   name: string;
   avatar: string;
+  openid: string;
 }
 
 export interface IPage {
@@ -30,6 +31,22 @@ export interface IImage {
 }
 
 /**
+ * 课程类型
+ */
+export interface ICourse {
+  id: string;
+  name: string; // 标题
+  desc?: string;
+  group?: string; // 适龄人群
+  baseAbility?: string;
+  limitNumber: number; // 限制人数
+  duration: number; // 持续时长
+  reserveInfo?: string;
+  refundInfo?: string;
+  otherInfo?: string;
+}
+
+/**
  * 门店
  */
 export interface IOrganization {
@@ -45,6 +62,18 @@ export interface IOrganization {
   tel?: string;
   longitude?: string;
   latitude?: string;
+}
+
+/**
+ * 消费卡
+ */
+export interface ICard {
+  id: string;
+  name: string;
+  type: string;
+  time: number;
+  validityDay: number;
+  course: ICourse;
 }
 
 /**
@@ -68,7 +97,40 @@ export interface IProduct {
   displayType: string;
   distance?: string;
   org: IOrganization;
+  cards?: ICard[];
 }
-type TBaseQuery<T> = { [key: string]: { __typename?: 'Query', data: T, page: IPage } };
+type TBaseQuery<T> = { [key: string]: { __typename?: 'Query', data: T, page: IPage, code: number, message: string } };
 export type TProductTypeQuery = TBaseQuery<IProductType[]>;
 export type TProductsQuery = TBaseQuery<IProduct[]>;
+export type TProductQuery = TBaseQuery<IProduct>;
+
+export type TOrgQuery = TBaseQuery<IOrganization>;
+
+export type TCourse = ICourse & { cardName: string };
+
+export interface IWxConfig {
+  appId: string;
+  timeStamp: string;
+  nonceStr: string;
+  package: string;
+  signType: string;
+  paySign: string;
+}
+
+/**
+ * 个人消费卡
+ */
+export interface ICardRecord {
+  id: string;
+  startTime: string;
+  endTime: string;
+  buyTime: string;
+  residueTime: number; // 剩余次数
+  status: string;
+  card:ICard;
+  org: IOrganization;
+}
+
+export type TWxConfigQuery = TBaseQuery<IWxConfig>;
+
+export type TCardRecordsQuery = TBaseQuery<ICardRecord[]>;
