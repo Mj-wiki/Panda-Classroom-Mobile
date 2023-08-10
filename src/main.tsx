@@ -1,17 +1,26 @@
 import ReactDOM from 'react-dom/client';
 import { ApolloProvider } from '@apollo/client';
 import { ConfigProvider } from 'antd-mobile';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import zhCN from 'antd-mobile/es/locales/zh-CN';
+import Login from './containers/Login';
+import Register from './containers/Register';
 import { client } from './utils/apollo';
+import Home from './containers/Home';
 
-import App from './App';
 import './theme.css';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ConfigProvider locale={zhCN}>
     <ApolloProvider client={client}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </BrowserRouter>
     </ApolloProvider>
   </ConfigProvider>,
 );
