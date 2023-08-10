@@ -15,6 +15,10 @@ export const ROUTE_KEY = {
   ORG_INFO: 'orgInfo',
   PRODUCT_INFO: 'productInfo',
   BUY: 'buy',
+  EDIT_INFO: 'editInfo',
+  MY_COURSE: 'myCourse',
+  ORDER_COURSE: 'orderCourse',
+  MY_CARD: 'myCard',
 };
 
 export const ROUTE_CONFIG: Record<string, IRoute> = {
@@ -30,6 +34,11 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
     isMenu: true,
     icon: mySvg,
   },
+  [ROUTE_KEY.EDIT_INFO]: {
+    path: 'editInfo',
+    name: '编辑个人信息',
+    isMenu: false,
+  },
   [ROUTE_KEY.ORG_INFO]: {
     path: 'orgInfo/:id',
     name: '门店详情',
@@ -43,6 +52,21 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
   [ROUTE_KEY.BUY]: {
     path: 'buy/:id',
     name: '购买信息',
+    isMenu: false,
+  },
+  [ROUTE_KEY.MY_COURSE]: {
+    path: 'myCourse',
+    name: '我的课程表',
+    isMenu: false,
+  },
+  [ROUTE_KEY.MY_CARD]: {
+    path: 'myCard',
+    name: '我的消费卡',
+    isMenu: false,
+  },
+  [ROUTE_KEY.ORDER_COURSE]: {
+    path: 'orderCourse',
+    name: '预约课程',
     isMenu: false,
   },
 };
