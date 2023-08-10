@@ -31,6 +31,7 @@ export const GET_PRODUCTS = gql`
         originalPrice
         stock
         status
+        distance
         preferentialPrice
         org {
           id
