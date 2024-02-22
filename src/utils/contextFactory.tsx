@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
+
 import React, {
   createContext, useMemo, useState, useContext,
 } from 'react';

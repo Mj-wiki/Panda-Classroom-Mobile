@@ -1,8 +1,4 @@
-# 水滴培训 手机端
-
-## 安装 ESLint
-`pnpm i eslint eslint-config-airbnb eslint-config-airbnb-typescript eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-react-hooks @typescript-eslint/parser @typescript-eslint/eslint-plugin -D`
-
+# 小熊课程 手机端
 ## vite 支持 eslint
 `pnpm i vite-plugin-eslint -D`
 
